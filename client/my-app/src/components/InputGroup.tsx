@@ -1,0 +1,39 @@
+import React from 'react';
+import cx from 'classnames';
+
+interface InputGroupProps {
+  className?: string;
+  type?: string;
+  placeholder?: string;
+  value: string;
+  error: string | undefined;
+  setValue: (str: string) => void;
+}
+
+const InputGroup: React.FC<InputGroupProps> = ({
+  className = 'mb-2',
+  type = 'text',
+  placeholder = '',
+  value,
+  error,
+  setValue,
+}) => {
+  return (
+    <div className={className}>
+      <input
+        type={type}
+        style={{ minWidth: 300 }}
+        className={cx(
+          'w-full p-3 transition duration-200 border border-gray-400 rounded bg-grey-50 focus:bg-white hover:bg-white',
+          { 'border-red-500': error }
+        )}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      ></input>
+      <small className="font-medium text-red-500">{error}</small>
+    </div>
+  );
+};
+
+export default InputGroup;
