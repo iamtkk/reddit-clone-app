@@ -1,14 +1,14 @@
-import InputGroup from '@/components/InputGroup';
-import axios from 'axios';
-import { errorToJSON } from 'next/dist/server/render';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { FormEvent, useState } from 'react';
+import InputGroup from "@/components/InputGroup";
+import axios from "axios";
+import { errorToJSON } from "next/dist/server/render";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { FormEvent, useState } from "react";
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});
 
   const router = useRouter();
@@ -16,15 +16,15 @@ const Register = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/auth/register', {
+      const res = await axios.post("/auth/register", {
         email,
         password,
         username,
       });
-      console.log('res', res);
-      router.push('/login');
+      // console.log("res", res);
+      router.push("/login");
     } catch (error: any) {
-      console.log('error', error);
+      console.log("error", error);
       setErrors(error.response.data || {});
     }
   };
