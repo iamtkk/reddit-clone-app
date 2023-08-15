@@ -1,4 +1,5 @@
 import InputGroup from "@/components/InputGroup";
+import { useAuthState } from "@/context/auth";
 import axios from "axios";
 import { errorToJSON } from "next/dist/server/render";
 import Link from "next/link";
@@ -10,8 +11,10 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});
+  const { authenticated } = useAuthState();
 
   const router = useRouter();
+  if (authenticated) router.push("/");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -21,7 +24,7 @@ const Register = () => {
         password,
         username,
       });
-      // console.log("res", res);
+      console.log("res", res);
       router.push("/login");
     } catch (error: any) {
       console.log("error", error);
