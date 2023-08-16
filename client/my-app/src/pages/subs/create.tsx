@@ -1,14 +1,14 @@
-import InputGroup from "@/components/InputGroup";
-import axios from "axios";
-import { GetServerSideProps } from "next";
-import { errorToJSON } from "next/dist/server/render";
-import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import InputGroup from '@/components/InputGroup';
+import axios from 'axios';
+import { GetServerSideProps } from 'next';
+import { errorToJSON } from 'next/dist/server/render';
+import { useRouter } from 'next/router';
+import { FormEvent, useState } from 'react';
 
 function SubCreate() {
-  const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [errors, setErrors] = useState<any>({});
 
   const router = useRouter();
@@ -16,7 +16,7 @@ function SubCreate() {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/subs", { name, title, description });
+      const res = await axios.post('/subs', { name, title, description });
       router.push(`/r/${res.data.name}`);
     } catch (error: any) {
       setErrors(error.response.data);
@@ -82,13 +82,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   try {
     const cookie = req.headers.cookie;
     // 쿠키가 없다면 에러를 보내기
-    if (!cookie) throw new Error("Missing auth token cookie");
+    if (!cookie) throw new Error('Missing auth token cookie');
+
     // 쿠키가 있다면 그 쿠키를 이용해서 백엔드에서 인증 처리하기
-    await axios.get("/auth/me", { headers: { cookie } });
+    await axios.get('/auth/me', { headers: { cookie } });
+
     return { props: {} };
   } catch (error) {
-    // 백엔드에서 요청에서 던져준 쿠키를 이용해
-    res.writeHead(307, { Location: "/login" }).end();
+    // 백엔드에서 요청에서 던져준 쿠키를 이용해 인증처리할 때 에러가 나면 /login 페이지로 이동
+    res.writeHead(307, { Location: '/login' }).end();
     return { props: {} };
   }
 };
