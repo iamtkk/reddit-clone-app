@@ -4,3 +4,13 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Sub {
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+  title: string;
+  description: string;
+  imageUrn: string;
+  bannerUrn: string;
+}
